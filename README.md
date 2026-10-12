@@ -4,7 +4,7 @@ A nail that lives on the Windows desktop. Pull out a string, hook a file, and th
 
 Hooked files are moved into FileNail's folder, not deleted. They come back on the nail after you restart the computer.
 
-## Showcase
+## Demo
 
 <img src="images/showcase.gif" width="720" alt="FileNail on the desktop, hooking a file and changing looks">
 
