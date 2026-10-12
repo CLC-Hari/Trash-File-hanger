@@ -1,6 +1,7 @@
 """FileNail — a nail on the desktop that files can swing from.
 
-Double-click "Start FileNail.vbs", or run:  pyw filenail.pyw
+Double-click "Start FileNail.vbs". If Python is missing, that launcher
+can download and install it. Or run:  pyw filenail.pyw
 
 Drag the nail anywhere. Pull the gold ring and let go on a desktop
 icon to hook that file. The file hangs off the string and swings
@@ -2393,18 +2394,14 @@ def ensure_login_start() -> None:
         return
     script = os.path.abspath(os.path.join(APP_DIR, "filenail.pyw"))
     folder = os.path.abspath(APP_DIR)
+    pythonw = os.path.join(os.path.dirname(os.path.abspath(sys.executable)), "pythonw.exe")
+    if not os.path.isfile(pythonw):
+        pythonw = os.path.abspath(sys.executable)
     body = (
         "' Starts FileNail when Windows signs in.\r\n"
         "Set shell = CreateObject(\"Wscript.Shell\")\r\n"
         f"shell.CurrentDirectory = \"{folder}\"\r\n"
-        "Function Found(cmd)\r\n"
-        "  Found = (shell.Run(\"cmd /c where \" & cmd & \" >nul 2>&1\", 0, True) = 0)\r\n"
-        "End Function\r\n"
-        "If Found(\"pyw\") Then\r\n"
-        f"  shell.Run \"pyw -3 \"\"{script}\"\"\", 0, False\r\n"
-        "ElseIf Found(\"pythonw\") Then\r\n"
-        f"  shell.Run \"pythonw \"\"{script}\"\"\", 0, False\r\n"
-        "End If\r\n"
+        f"shell.Run \"\"\"{pythonw}\"\" \"\"\"{script}\"\"\", 0, False\r\n"
     )
     target = os.path.join(startup, "FileNail.vbs")
     try:

@@ -6,11 +6,11 @@ Hooked files are moved into FileNail's folder, not deleted. They come back on th
 
 ## Run it
 
-You need Python 3 on Windows, including tkinter (the usual python.org install).
-
 Double-click `Start FileNail.vbs`.
 
-Or from this folder:
+If Python is already installed, FileNail starts immediately. If it is not, FileNail asks to download Python 3.15 from python.org and installs it for the current user. That step needs an internet connection. Python stays installed after FileNail closes.
+
+Or, when Python is already installed, from this folder:
 
 ```bat
 pyw -3 filenail.pyw
