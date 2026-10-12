@@ -6,7 +6,9 @@ Hooked files are moved into FileNail's folder, not deleted. They come back on th
 
 ## Showcase
 
-[Watch FileNail on the desktop](images/showcase.mp4): drag the nail, hook a file, and change how the character looks.
+<video src="https://github.com/user-attachments/assets/3f2e41ee-ceb9-4456-8843-8f08c6bc715b"></video>
+
+Drag the nail, hook a file, and change how the character looks.
 
 ## Run it
 
