@@ -4,6 +4,10 @@ A nail that lives on the Windows desktop. Pull out a string, hook a file, and th
 
 Hooked files are moved into FileNail's folder, not deleted. They come back on the nail after you restart the computer.
 
+## Showcase
+
+[Watch FileNail on the desktop](images/showcase.mp4): drag the nail, hook a file, and change how the character looks.
+
 ## Run it
 
 Double-click `Start FileNail.vbs`.
