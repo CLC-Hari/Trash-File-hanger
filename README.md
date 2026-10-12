@@ -25,11 +25,23 @@ The first time it runs, it also adds itself to your Windows Startup folder, so t
 - Drag the hanging icon toward the nail to shorten the string, or away from the nail to let more out. Scrolling on the icon does the same thing.
 - Double-click the icon to open the file.
 - Right-click the nail or a file for **Put the file back**, reel in, let out, and the rest.
-- Right-click the nail and choose **Change look** to switch the face: Goofy, Sleepy, Grumpy, Cool, Cat, or Robot. The choice is remembered.
+- Right-click the nail and choose **Change look** to switch the face. The choice is remembered. See [Looks](#looks).
 - Poke the nail. It blinks, and on a weekday it occasionally leaves a short note.
 - Quit with the red X on the nail, or Ctrl+Shift+Q.
 
 Shell items such as This PC cannot be moved. The FileNail folder itself cannot be hooked.
+
+## Looks
+
+Right-click the nail and choose **Change look**. The nail and the hanging file both change, and the choice is remembered.
+
+| Goofy | Sleepy | Grumpy |
+| :---: | :---: | :---: |
+| <img src="images/goofy.png" width="160" alt="Goofy"> | <img src="images/sleepy.png" width="160" alt="Sleepy"> | <img src="images/grumpy.png" width="160" alt="Grumpy"> |
+
+| Cool | Cat | Robot |
+| :---: | :---: | :---: |
+| <img src="images/cool.png" width="160" alt="Cool"> | <img src="images/cat.png" width="160" alt="Cat"> | <img src="images/robot.png" width="160" alt="Robot"> |
 
 ## Where files go
 
