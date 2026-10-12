@@ -6,7 +6,7 @@ Hooked files are moved into FileNail's folder, not deleted. They come back on th
 
 ## Showcase
 
-<video src="https://github.com/user-attachments/assets/3f2e41ee-ceb9-4456-8843-8f08c6bc715b"></video>
+<img src="images/showcase.gif" width="720" alt="FileNail on the desktop, hooking a file and changing looks">
 
 Drag the nail, hook a file, and change how the character looks.
 
