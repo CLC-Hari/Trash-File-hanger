@@ -25,6 +25,7 @@ The first time it runs, it also adds itself to your Windows Startup folder, so t
 - Drag the hanging icon toward the nail to shorten the string, or away from the nail to let more out. Scrolling on the icon does the same thing.
 - Double-click the icon to open the file.
 - Right-click the nail or a file for **Put the file back**, reel in, let out, and the rest.
+- Right-click the nail and choose **Change look** to switch the face: Goofy, Sleepy, Grumpy, Cool, Cat, or Robot. The choice is remembered.
 - Poke the nail. It blinks, and on a weekday it occasionally leaves a short note.
 - Quit with the red X on the nail, or Ctrl+Shift+Q.
 
