@@ -95,377 +95,14 @@ LOG_PATH = os.path.join(STATE_DIR, "run.log")
 HELD_DIR = os.path.join(STATE_DIR, "held")
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 LOOKS = (
+    ("goofy", "Goofy"),
+    ("sleepy", "Sleepy"),
+    ("grumpy", "Grumpy"),
+    ("cool", "Cool"),
     ("cat", "Cat"),
-    ("dog", "Dog"),
-    ("avocado", "Avocado"),
-    ("egg", "Egg"),
     ("robot", "Robot"),
 )
 LOOK_IDS = frozenset(key for key, _label in LOOKS)
-
-# "." is skipped so the file icon and the desktop show through.
-PIXEL = {
-    ".": None,
-    "A": "#f0ebe3",
-    "B": "#eee3d8",
-    "C": "#e2dfdb",
-    "D": "#c3e164",
-    "E": "#b0dd2e",
-    "F": "#ead1b1",
-    "G": "#e9cfab",
-    "H": "#ddd0bc",
-    "I": "#dbc2ad",
-    "J": "#c6c1b9",
-    "K": "#91c924",
-    "L": "#37c4f5",
-    "M": "#f5b270",
-    "N": "#e8a15d",
-    "O": "#c0ad9e",
-    "P": "#16100e",
-    "Q": "#d98746",
-    "R": "#ee7c18",
-    "S": "#be8856",
-    "T": "#a69e93",
-    "V": "#7fa75d",
-    "W": "#fffef8",
-    "X": "#a18970",
-    "Y": "#ffffff",
-    "Z": "#878897",
-    "a": "#cc6b23",
-    "b": "#b06c32",
-    "c": "#8e5f45",
-    "d": "#884d21",
-    "e": "#6b7754",
-    "f": "#6a655f",
-    "h": "#6e635a",
-    "i": "#695f44",
-    "j": "#5e4237",
-    "k": "#567a39",
-    "l": "#267315",
-    "m": "#455159",
-    "n": "#4e4554",
-    "o": "#3f3d2a",
-    "p": "#303d4d",
-    "q": "#493333",
-    "r": "#373636",
-    "s": "#2f3845",
-    "t": "#1f232a",
-}
-# Pixel characters drawn in the style of the reference designs.
-# Eyes use W/P/Y so the pupils can follow the cursor. Robot eyes use L.
-SPRITES = {
-    'cat': [
-        '..BRQB.................IRQB......',
-        '..ORRRI...............ORRRI......',
-        '..RQQRRO.............ORRQQR......',
-        '..ROOQRRO...........QRRQOOR......',
-        '..ROOIQRROBbbbbbbbIQRRQIOOR......',
-        '..ROOBBQRRRRRRRRRRRRRQBIOOR......',
-        '..ROIBBORRRRRRRRRRRRROBBIOR......',
-        '..RQOBIRRRRRRRRRRRRRRRBBOQR......',
-        '..OQOOQRRRRRRRRRRRRRRRQOORI......',
-        '..ORRRRRRRRRRRRRRRRRRRRRRRI......',
-        '..IRRRRRRRRRRRRRRRRRRRRRRRI......',
-        '...RRRRRRRRRRQBQRRRRRRRRRb.......',
-        '..IRRRRRbbRRRIBIRRRbbRRRRRI......',
-        '..ORRRRbbbbRQBBBQRbbbbRRRRO......',
-        '..bRRRbbbbbbIBBBObbbbbbRRRQ......',
-        '.BRRRRbObPbbBBBBBbbPbObRRRRB.....',
-        '.IRRRRRObbbOBBBBBObbbORRRRRI.....',
-        '.IbbRRQOObOBBIIIBBObOOQRRbbI.....',
-        'OIbbbbOBBBBBBOOOBBBBBBObbbbIO....',
-        '..ObbbOBBBBBBIOBBBBBBBObbbI......',
-        '.OObRIOBBBBOBBOBBOBBBBOIRbOO.....',
-        'I..IbbIBBBBBOOBOOBBBBBIObI..I....',
-        '..IOIbIBBBBBBBBBBBBBBBIbIOI......',
-        '.BI..BObIBBBBBBBBBBBObOB..I......',
-        '......ORQIIBBBBBBBIIRRO..........',
-        '......bROBBBBBBBBBBBORRB.........',
-        '......RQBBBBBBBBBBBBBQRB.........',
-        '.....ORQIBBBBBBBBBBBIQRQ.........',
-        '.....ORRQBBBBBBBBBBBQRRQ.........',
-        '.....RRRQIBBBBBBBBBIRRRRB........',
-        '....IRRRRQBBBBBBBBBQRRRRO........',
-        '....ORRRRROBBBBBBBORRRRRQ........',
-        '...BRRRRRRQIBBBBBIQRRRRRRB.......',
-        '...ORRRRRRRQBBBBBQRRRRRRRb..BBB..',
-        '...RRRRRRRRROBBBORRRRRRRRRBBIBBB.',
-        '..IRRRRRRRRRQBBBORRRRRRRRROIBBBBB',
-        '..ORRRRRRRRQIIBIIQRRRRRRRRbBIBBBO',
-        '..ORRRRbIQIBBOBIBBIQObRRRRbIIIBOQ',
-        '..ORRROOBBBBBOIOBBBBBOIRRRbIIRRRR',
-        '..ORRIBBOBBBBOIOBBBBIIBBQRbIIRRRR',
-        '..BRRIBBOBBBBOIOBBBBOIBIRRIBbRRRR',
-        '...bRRIIOBBBBIIOBBBBOIIQRRORRRRRO',
-        '...IRQIIIIBBBBOIBBBIOIIORRRRRRRR.',
-        '....OBBBOBBBBBbBBBBBOBBBbRRRRRRI.',
-        '....OBBBIBBBBBbBBBBBIBBBIRRRRRO..',
-        '....OIBBOBBBBBbBBBBBIIBIObbbOB...',
-        '....BOOOOIBBIIbIIBBIOOOOI........',
-        '........BOOOOI.IOOOOI............',
-    ],
-
-    'dog': [
-        '.............FFdddddddFF.............',
-        '........FF.FSddbbbSSbbddFF.FF........',
-        '......FSddSddbbbSSSSSbbbddSddSF......',
-        '.....FddbbdbbbbSSSSSSSbbbbdbbdbF.....',
-        '....FdbbbddbbbbbSSSSSbbbbbddbbbdF....',
-        '...FdbbbdjbbbbbbbSSSbbbbbbdjdbbbdF...',
-        '..FdbbbdjdbbbbbbbbSbbbbbbbbdjbbbbdF..',
-        '.FdbbbbdjdbbbbbbbbSbbbbbbbbdjdbbbbdF.',
-        'FdbbbbbdjbbdjjbbbbbbbbbjjbbbjdbbbbbdF',
-        'SdbbbbdjdbbdbbbbbbbbbbbbbdbbdjbbbbbdF',
-        'jdbbbbdjdbbbbbbbbbbbbbbbbbbbdjdbbbbbj',
-        'jdbbbbdjdbbdjjdbbbbbbbdjjbbbdjdbbbbdj',
-        'jddbbbdjdbbjjjjbbbbbbbjjjjbbdjdbbbbdj',
-        'bddbbbdjdbdjjjjbbbbbbbbjjjdbdjdbbbddS',
-        'FjdbbbdjdbdjPjjbSSSSSbjPjjdbdjdbbddjF',
-        '.SjdbdjjdbbSjjjSFFFFFSjjjSbbdjjdbdjF.',
-        '.FddddjdbbbbddSFdjjjdFSddbbbbdjddddF.',
-        '..SddjjdbbbbbFFFjjjjjFFFbbbbbdjdddS..',
-        '..FdddbdbbbbFFFFjjjjjFFFFbbbbdbdddF..',
-        '...dd.SdbbbFFSFFFdjdFFFSFFbbbdS.dS...',
-        '......SddbbFFdSFFSjSFFSdFFbbddS......',
-        '.......dddbFFSjdjjjjjdjFFFbddd.......',
-        '........ddbbFFSjjdddjjSFFbddd........',
-        '........FdddSFFjSSSSbjFFSddb.........',
-        '.........FdjdSFSdSSSdFFSdjd..........',
-        '.........SddjjbFSdddSFbjdddF.........',
-        '.........bbdddddSFFFSdddddbdF........',
-        '........FdbbdddSbdddbSdddbbdS........',
-        '........SdbbbdSFSSSSSFSdbbbbd........',
-        '........dbbbbSFFFSSSFFFSbbbbdF.......',
-        '........dbbbbSFFFFFFFFFSbbbbdS.......',
-        '........jbbbbFFFFFFFFFFFbbbbdS.......',
-        '.......ddbbbbSFFFFFFFFFSbbbbddF......',
-        '.......dddbbbbSFFFFFFFSbbbbbddS......',
-        '......FdddbbbbbSFFFFFSbbbbbbjdj......',
-        '......SddjbbbbdSFFFFFSdbbbbdjbd......',
-        '......SddjbbbbddSFFFSddbbbbjdbd......',
-        '......SddjdbbbbjSSSSSjbbbbbjddj......',
-        '......FddddbbbbjbSSSbjbbbbdjddS......',
-        '.......FjdjbbbbjdbSbdjbbbbdddjF......',
-        '.......dddjbbbbdjdddjdbbbbdjjjF......',
-        '......bbbdjbbbbdjdddjdbbbbdddbdF.....',
-        '.....FdbbddbbbbddSSSddbbbbbdbbbd.....',
-        '.....FddddbbbbbbS...Sbbbbbbddddd.....',
-        '......SjjbbbbbbbS...Sbbbbbbbjjd......',
-        '.......FdddbbdbdS...SdbdbbdbdS.......',
-        '........FdjbbjddF...FddjbbjjF........',
-        '.........FdddjdF.....FdjddjF.........',
-    ],
-
-    'avocado': [
-        '................VlllllD................',
-        '..............DlkKVVVVllF..............',
-        '.............DlVDDDEEKVVlF.............',
-        '.............lVDDDEEEEKVllD............',
-        '............VlKDDEEEEEEKVlk............',
-        '............kVDDEEEEEEEEKlk............',
-        '...........VlKDDEEEEEEEEKllV...........',
-        '...........VlDDEEEEEEEEEKVlV...........',
-        '..........FkVDDEEEEEEEEEKVlkF..........',
-        '..........FlKDEEEEEEEEEEEVVlF..........',
-        '..........DlDDEEEEEEEEEEEKVlD..........',
-        '.........FlVDEEEEEEEEEEEEKVllF.........',
-        '.........VlKDEEEEEVkVEEEEEKVlV.........',
-        '.........lVEDEEEKkoookKEEEKVll.........',
-        '........kVKDEEEKookkoooKEEEKVlk........',
-        '........lVEDEEKokDDkkoooKEEKVll........',
-        '.......kVKDDEEkoDkkkkkooVEEEKVlk.......',
-        '.......kVEDEEEokDDkkkkoooEEEKVlk.......',
-        '......FkVDEEEkoDDkkkkkoookEEEKllF......',
-        '......VlKDEEEokDkkkkkkkoooEEEKVlV......',
-        '......VlDDEEEokkkkkkkkooooEEEKVlV......',
-        '......VkDDEEEookkkkkkoooooEEEEVllF.....',
-        '.....DlVDEEEEoookkkkooooooEEEEKVlF.....',
-        '.....DlKDEEEEkoooooooooookEEEEEVlF.....',
-        '.....DlKDEEEEEPoooooooPooKEEEEEVlF.....',
-        '.....DlKEEEEEEEoooooooookEEEEEEVlF.....',
-        '.....DlVEEEEEEEkoooooookEEEEEEKVlF.....',
-        '.....DlVEEEEEEEEKkoookKEEEEEEEVVlD.....',
-        '....FllVEEEEkooVEEEEEEEVookEEEVVllF....',
-        '...FlklVKEEKkFooEEEEEEEooooKEKVVlllF...',
-        '..FkKVllVKEKooooEEEEEEEooooKEKVllVKkF..',
-        '.FVKElllVKEKookkEEEEEEEoookKEKVlllEKVF.',
-        'FlKKVlllVKKEKkkKKkEEEkKKkkKEKVVlllVEKkF',
-        'FkEKloVllVKEEEEEKokVooKEEEEKVVllVolKEkF',
-        'lKKKVkDllVVKEEEEEKoooKEEEEKKVVllDkKKKKl',
-        'lVKlkl.kllVVKEEEEEEEEEEEEKKVVllk.lVlKVl',
-        'VlVllk.FlllVVKKEEEEEEEEEKKVVlllF.kllVlV',
-        '.VlkF...llllVVVKKEEEEEKKVVVllll...FklV.',
-        '..F.....FllllVVVKKKKKKKVVVllllF........',
-        '.........FlllllVVVVVVVVVlllllF.........',
-        '..........FlllllVVVVVVllllllF..........',
-        '...........FlllllllllllllllF...........',
-        '............klllllllllllllk............',
-        '..........FkllllkFFFFFkllllkF..........',
-        '..........kKVkllV.....VllVVKk..........',
-        '.........oVKVVllV.....VllVKKVo.........',
-        '.........llVVlloF.....FlllVVll.........',
-        '.........Flllll........FlllllF.........',
-    ],
-
-    'egg': [
-        '.................JffffffJ.................',
-        '...............CfTAAAAACTfC...............',
-        '.............AffAAAAAAAATJffA.............',
-        '............AfCAAAAAAAAAATCCfA............',
-        '...........AfCAAAAAAAAAAAAAACfA...........',
-        '..........AfCAAAAAAAAAAAATJJCCfA..........',
-        '.........AfCAAAAAAAAAAAAAATJCCCfA.........',
-        '.........fJAAAAAAAAAAAAAAAAfACAJf.........',
-        '........CTCAAAAAAAAAAAAAAAAfCCCJTC........',
-        '........TJAAAAAAAAAAAAAAAAJTJCCAJT........',
-        '.......CTCAAAAAAAAAAAAAAAJTATTCACTC.......',
-        '.......TJAAAAAAAAAAAAAAAATCAATJAATT.......',
-        '......JTCAAAAAAAAAAAAAAAAJAAAATJAJTC......',
-        '......TTAAAAAAAAAAAAAAAAJCAAAAAJJCTT......',
-        '.....JTCAAAAAAAAAAAAAAAACAAAAAAAJCJTC.....',
-        '.....TTAAAAAAAAAAAAAAAAAAAAAAAAAAACTJ.....',
-        '.....TTAAAAAAAAAAAAAAAAAAAAAAAAAAACTJ.....',
-        '....CTJAAAAAAAAAAAAAAAAAAAAAAAAAAACJTC....',
-        '....JTAAAAAAAfffAAAAAAAAAAfffAAAAAACTJ....',
-        '....JTAAAAAAfTffTAAAAAAAATTfffAAAAACTJ....',
-        '....JTAAAAACfffffAAAAAAAAfJfffCAAAACTJ....',
-        '....JTAAAAACCfPffAAAAAAAAffPffCAAAACTJ....',
-        '....JTAAAAACfffffAAAAAAAAfffffCAAACCfJ....',
-        '....JTAAAAAATfffTAAAAAAAATfffTAAAACCfJ....',
-        '....JTAAAAAAATTTAAAAAAAAAATTTAAAAACCfJ....',
-        '....JTAAAAAAAAAAATTAAAATTAAAAAAAAACJfJ....',
-        '....JTCAAAAAAAAAACfTAATfCAAAAAAAACCJfJ....',
-        '....JfCAAAAAAAAAAACffffCAAAAAAAACCJJfJ....',
-        '....ATTCAAAAAAAAAAACJJCAAAAAAAAACCJTTA....',
-        '....CfTCAAAAAAAAAAAAAAAAAAAAAAACCJJffC....',
-        '...CTJTJCAAAAAAAAAAAAAAAAAAAAAACCJTTJTC...',
-        '..CTCATTCCAAAAAAAAAAAAAAAAAAAACCJJTTACTC..',
-        '.AfCCCfTJCAAAAAAAAAAAAAAAAAAACCJJJffCCCfA.',
-        'AfJAATTTTCCAAAAAAAAAAAAAAAAACCJJJTTTTACJfA',
-        'AfAAAJCTTJCCAAAAAAAAAAAAAACACCJJJfTCJCCCfA',
-        'fCAAAJJAfTJCCCAAAAAAAAAAACCCCJJJTTATJCCCCf',
-        'fAAAAATJAfTJCCCCAAAAAAACCCCCJJJTfAJTAAACCf',
-        'fCAATTTJ.AfTJJCCCCCCCCCCCJJJJJTfA.JTTTACCf',
-        'fJJCTTTA..AffJJJCCCCCCJJJJJJJTfA..ATTTCJJf',
-        'CfJJJAA....AfffJJJJJJJJJJJTfffA....AAJJTfC',
-        '.AffT........fTffTJJJJJJTffTf........TffA.',
-        '.............fCJTffffffffTJCf.............',
-        '...........ffJCATT......TTACJff...........',
-        '..........fCCCCAJTT....TTCACCCJf..........',
-        '.........fJCCCACJTT....TTJCCCCCJf.........',
-        '.........fJACCCJTfT....TfJJCCCAJf.........',
-        '.........fTJCCJTfT......TfTJCCJff.........',
-        '..........ffffffT........fffffff..........',
-    ],
-
-    'robot': [
-        '...........JZZA...........',
-        '...........ZJJZ...........',
-        '...........ZJZm...........',
-        '...........JmmJ...........',
-        '............pm............',
-        '...........AmmA...........',
-        '......AAAAAfJZmAAAAA......',
-        '.....JZffffpmppfffffJ.....',
-        '....AfAJAAAJJJJAAAJTfA....',
-        '....AfTZZZZZZZZZZZZfmA....',
-        '....AfJJJJJJJJJJJJJfpA....',
-        '...AffAJJJJJJJJJJJJTmfA...',
-        '...TTfALLLLLJJLLLLLTmTT...',
-        '...TTfALLPLLJJLLPLLTmZT...',
-        '...TfZALLLLLJJLLLLLTmfT...',
-        '...TmfALLLLLJJLLLLLTmmT...',
-        '....ffAJJJJJJJJJJJJTmZ....',
-        '....AfJJJJJJJJJJJJJZmA....',
-        '....AffZTTTTTTTTTTZff.....',
-        '.....AfmfmppppppmfmfA.....',
-        '......JfffpffffpfffJ......',
-        '...ZfffJJJZZZZZZTJJpffT...',
-        '..JZAffJJJJJJJJJJJZpfAZJ..',
-        '..JZJffJTffTJJZffTTpfJfJ..',
-        '..JmfpfJfATfJJfTffTppfmA..',
-        '..JmppfJfTTfJJffffTpppmJ..',
-        '..fTmTfJZffZJJZppZTpTmTf..',
-        '.JffmAfJJJJZZZTJJJTpAmffJ.',
-        '.ZfmpJfJJJJZJZmJJJTpJpmfZ.',
-        'AZATpAfJJJJZZZmJJJTpApTAZA',
-        'JTJTfffJJJJZmmZJJJTpffJJZJ',
-        'JZJZfffTJJJJJTJJJJfpffZJfJ',
-        'JpmpffmffffffffffffmffpmmA',
-        'fJJfZfJppppmmmmppppJfZfJJf',
-        'fJZmZJJfffpmffmpfffJJZmZJf',
-        'mffZfJJfTTpTTTTpTTmJJfZffm',
-        'ZffZfAJfZZpffffpTTmJAfZfmZ',
-        '.fmJ..JfJTpJffJmJJfJ..JmZ.',
-        '......ZfTZmZffZfTTfZ......',
-        '......JpmmpAffApmmpJ......',
-        '......fJTZfZffZfZTTf......',
-        '......fJJTffffffJJTf......',
-        '......fJJTffffffJJTm......',
-        '.....JffffmffffffffmJ.....',
-        '....JZAJJJmpAApfJJJJfJ....',
-        '....ZJJJJJfpAApfJJJJTZ....',
-        '....ZfZZZZmpAApmZZZZfZ....',
-        '....ZppppppJ..JppppppZ....',
-    ],
-}
-
-BLINK_STYLE = {
-    "cat": ("b", "P"),
-    "dog": ("j", "P"),
-    "avocado": ("o", "P"),
-    "egg": ("f", "P"),
-    "robot": ("J", "P"),
-}
-
-def shift_pupils(rows: list[str], gx: int, gy: int) -> list[str]:
-    """Slide pupils one pixel toward where the character is looking."""
-    if gx == 0 and gy == 0:
-        return rows
-    grid = [list(row) for row in rows]
-    height = len(grid)
-    width = len(grid[0])
-    pupils = [(x, y) for y in range(height) for x in range(width) if grid[y][x] == "P"]
-    pupils.sort(key=lambda spot: -(spot[0] * gx + spot[1] * gy))
-    for x, y in pupils:
-        nx, ny = x + gx, y + gy
-        if nx < 0 or ny < 0 or nx >= width or ny >= height:
-            continue
-        dest = grid[ny][nx]
-        if dest not in "WLYPUg":
-            continue
-        under = "L" if dest == "L" else "g" if dest == "g" else "W"
-        grid[y][x] = under
-        grid[ny][nx] = "P"
-    return ["".join(row) for row in grid]
-
-
-def blink_pixels(rows: list[str], fill: str, ink: str) -> list[str]:
-    """Close every eye into a one-pixel line."""
-    grid = [list(row) for row in rows]
-    height = len(grid)
-    width = len(grid[0])
-    seen = [[False] * width for _ in range(height)]
-    eye = set("WPYULg")
-    for y in range(height):
-        for x in range(width):
-            if seen[y][x] or grid[y][x] not in eye:
-                continue
-            stack = [(x, y)]
-            cells: list[tuple[int, int]] = []
-            while stack:
-                cx, cy = stack.pop()
-                if cx < 0 or cy < 0 or cx >= width or cy >= height or seen[cy][cx]:
-                    continue
-                if grid[cy][cx] not in eye:
-                    continue
-                seen[cy][cx] = True
-                cells.append((cx, cy))
-                stack.extend(((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)))
-            mid = sum(cy for _cx, cy in cells) // len(cells)
-            for cx, cy in cells:
-                grid[cy][cx] = ink if cy == mid else fill
-    return ["".join(row) for row in grid]
 
 SCALE = 1.0
 COM_READY = False
@@ -1365,7 +1002,7 @@ class App:
 
         cx, cy = self.primary_point(0.5, 0.34)
         self.nail = Nail(cx, cy)
-        self.look = "cat"
+        self.look = "goofy"
         self._pix: dict = {}
         self._load()
 
@@ -1603,7 +1240,7 @@ class App:
             pass
 
     def pick(self, x: float, y: float, slop: float = 0.0) -> tuple[str | None, Rope | None]:
-        kx, ky = self._close_point()
+        kx, ky = self.nail.x + u(20), self.nail.y - u(22)
         if math.hypot(x - kx, y - ky) <= u(9) + slop:
             return "close", None
         w, h = self.card_size()
@@ -1612,14 +1249,13 @@ class App:
                 continue
             ex, ey = rope.end()
             top = self.card_top(ey)
-            left = ex - w / 2
+            left = ex - w / 2 + rope.lean * u(5)
             if left - slop <= x <= left + w + slop and top - slop <= y <= top + h + slop:
                 return ("card" if rope.path else "blank"), rope
         rx, ry = self.nail.ring()
         if math.hypot(x - rx, y - ry) <= u(14) + slop:
             return "ring", None
-        cx, cy, half_w, half_h = self._nail_focus()
-        if abs(x - cx) <= half_w + slop and abs(y - cy) <= half_h + slop:
+        if math.hypot(x - self.nail.x, y - self.nail.y) <= u(28) + slop:
             return "nail", None
         return None, None
 
@@ -1777,10 +1413,11 @@ class App:
             return
         self.look = look
         lines = {
+            "goofy": "Back to goofy.",
+            "sleepy": "Very sleepy.",
+            "grumpy": "Don't poke me.",
+            "cool": "Too cool for this nail.",
             "cat": "Mrow.",
-            "dog": "Bork.",
-            "avocado": "Fresh today.",
-            "egg": "Careful. I'm an egg.",
             "robot": "Beep. New face.",
         }
         self.say(lines[look])
@@ -2128,186 +1765,216 @@ class App:
         vx, _vy = rope.velocity()
         target = clamp(vx / u(14), -1.0, 1.0)
         rope.lean += (target - rope.lean) * 0.16
+        lean = rope.lean
         top = self.card_top(ey)
-        left = ex - size / 2
+        left = ex - size / 2 + lean * u(5)
         sx, sy = self.last_mouse
         hx, hy = self.to_canvas(sx, sy)
         hovering = left <= hx <= left + size and top <= hy <= top + size
-        self._draw_file(left, top, size, rope.lean, rope.missing, hovering or bool(rope.flash))
+        if hovering or rope.flash:
+            pad = u(6)
+            self.canvas.create_oval(left - pad, top - pad, left + size + pad, top + size + pad, outline="#e6b84d", width=3, tags="d")
+        self.canvas.create_oval(left + u(4), top + size - u(4), left + size - u(2), top + size + u(8), fill="#2a2a2a", outline="", tags="d")
+        if rope.icon is not None:
+            self.canvas.create_image(left + size / 2, top + u(2), image=rope.icon, anchor="n", tags="d")
+        else:
+            self._draw_blank_icon(left, top, size, missing=rope.missing)
         self.canvas.create_oval(ex - u(3.5), ey - u(3.5), ex + u(3.5), ey + u(3.5), fill="#f3d7a4", outline="#3a2918", width=1, tags="d")
 
-    def _draw_file(self, x: float, y: float, size: float, lean: float, missing: bool, hot: bool) -> None:
-        """A sheet of paper. The character stays on the nail."""
+    def _draw_blank_icon(self, x: float, y: float, size: float, missing: bool = False) -> None:
         c = self.canvas
-        w = size * 0.74
-        h = size * 0.96
-        x0 = x + (size - w) / 2
-        y0 = y + (size - h) / 2
-        fold = u(12)
-        slip = lean * u(8)
-        paper = "#d9d6d0" if missing else "#fff8ee"
-        edge = "#8a8178" if missing else "#3a2918"
-        rule = "#cfc6b6" if missing else "#e4d3b0"
-        fold_fill = "#eceae6" if missing else "#f3e6c4"
+        page = "#fffdf6" if not missing else "#eceae4"
+        s = size
         c.create_polygon(
-            x0 + u(3), y0 + u(4),
-            x0 + w + u(3), y0 + u(4),
-            x0 + w + slip + u(3), y0 + h + u(4),
-            x0 + slip + u(3), y0 + h + u(4),
-            fill="#2a2a2a", outline="", tags="d",
-        )
-        if hot:
-            c.create_rectangle(x0 - u(4), y0 - u(4), x0 + w + abs(slip) + u(4), y0 + h + u(4), outline="#e6b84d", width=3, tags="d")
-        c.create_polygon(
-            x0, y0,
-            x0 + w - fold, y0,
-            x0 + w - fold + slip * 0.2, y0 + fold,
-            x0 + w + slip * 0.2, y0 + fold,
-            x0 + w + slip, y0 + h,
-            x0 + slip, y0 + h,
-            fill=paper, outline=edge, width=2, joinstyle="miter", tags="d",
+            x + s * 0.08, y + s * 0.16,
+            x + s * 0.42, y + s * 0.02,
+            x + s * 0.78, y + s * 0.10,
+            x + s * 0.98, y + s * 0.28,
+            x + s * 0.90, y + s * 0.78,
+            x + s * 0.62, y + s * 0.98,
+            x + s * 0.18, y + s * 0.90,
+            x + s * 0.02, y + s * 0.48,
+            fill=page, outline="#24180f", width=2, smooth=True, tags="d",
         )
         c.create_polygon(
-            x0 + w - fold, y0,
-            x0 + w + slip * 0.2, y0 + fold,
-            x0 + w - fold + slip * 0.2, y0 + fold,
-            fill=fold_fill, outline=edge, width=1, tags="d",
+            x + s * 0.62, y + s * 0.08,
+            x + s * 0.78, y + s * 0.10,
+            x + s * 0.70, y + s * 0.28,
+            fill="#f0d7a4", outline="#24180f", width=2, tags="d",
         )
-        if not missing:
-            for i in range(4):
-                yy = y0 + h * (0.40 + i * 0.12)
-                t = (yy - y0) / h
-                c.create_line(
-                    x0 + u(7) + slip * t, yy,
-                    x0 + w * 0.62 + slip * t, yy,
-                    fill=rule, width=2, capstyle="round", tags="d",
-                )
 
-    def _pixel_zoom(self) -> int:
-        return max(2, int(round(2 * SCALE)))
+    def _nail_gaze(self, x: float, y: float, dizzy: bool) -> tuple[float, float]:
+        if dizzy:
+            ang = self.t * 0.45
+            return math.cos(ang) * u(3.2), math.sin(ang) * u(2.4)
+        mx, my = self.to_canvas(*self.last_mouse)
+        dx = clamp((mx - x) / u(36), -1, 1) * u(3.0)
+        dy = clamp((my - y) / u(36), -1, 1) * u(2.2)
+        return dx, dy
 
-    def _nail_focus(self) -> tuple[float, float, float, float]:
-        zoom = self._pixel_zoom()
-        look = self.look if self.look in LOOK_IDS else "cat"
-        rows = SPRITES[look]
-        half_w = len(rows[0]) * zoom / 2
-        half_h = len(rows) * zoom / 2
-        cy = self.nail.y + u(16) - half_h
-        return self.nail.x, cy, half_w, half_h
+    def _draw_nail_face(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        look = self.look if self.look in LOOK_IDS else "goofy"
+        {
+            "goofy": self._nail_goofy,
+            "sleepy": self._nail_sleepy,
+            "grumpy": self._nail_grumpy,
+            "cool": self._nail_cool,
+            "cat": self._nail_cat,
+            "robot": self._nail_robot,
+        }[look](x, y, sx, sy, dizzy)
 
-    def _close_point(self) -> tuple[float, float]:
-        cx, cy, half_w, half_h = self._nail_focus()
-        return cx + half_w + u(6), cy - half_h - u(10)
-
-    def _look_rows(self) -> list[str]:
-        look = self.look if self.look in LOOK_IDS else "cat"
-        rows = SPRITES[look]
-        if self.blink:
-            fill, ink = BLINK_STYLE[look]
-            return blink_pixels(rows, fill, ink)
-        return rows
-
-    def _pupil_shift(self, rows: list[str], x: int, y: int, ox: int, oy: int, zoom: int) -> tuple[int, int]:
-        """Keep a sliding pupil inside the eye instead of jumping onto the face."""
-        height, width = len(rows), len(rows[0])
-
-        def eye_at(nx: int, ny: int) -> bool:
-            return 0 <= nx < width and 0 <= ny < height and rows[ny][nx] != "."
-
-        if ox > 0 and not eye_at(x + 1, y):
-            ox = 0
-        if ox < 0 and not eye_at(x - 1, y):
-            ox = 0
-        if oy > 0 and not eye_at(x, y + 1):
-            oy = 0
-        if oy < 0 and not eye_at(x, y - 1):
-            oy = 0
-        if ox and oy and not eye_at(x + (1 if ox > 0 else -1), y + (1 if oy > 0 else -1)):
-            if abs(ox) >= abs(oy):
-                oy = 0
+    def _nail_goofy(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        dx, dy = self._nail_gaze(x, y, dizzy)
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            ey = y - u(2) * sy
+            if self.blink:
+                self._closed_eye(ex, ey, u(5), "#1c1c1c")
             else:
-                ox = 0
-        left = x * zoom + ox
-        top = y * zoom + oy
-        if left < 0 or top < 0 or left + zoom > width * zoom or top + zoom > height * zoom:
-            return 0, 0
-        return ox, oy
-
-    def _sprite_image(self, rows: list[str], ox: int = 0, oy: int = 0):
-        zoom = self._pixel_zoom()
-        key = (tuple(rows), zoom, ox, oy)
-        cached = self._pix.get(key)
-        if cached is not None:
-            return cached
-        width = len(rows[0])
-        height = len(rows)
-        img = self.tk.PhotoImage(master=self.root, width=width * zoom, height=height * zoom)
-        pupils: list[tuple[int, int]] = []
-        for y, row in enumerate(rows):
-            parts = []
-            for x, ch in enumerate(row):
-                if ch == "P":
-                    pupils.append((x, y))
-                    near = [
-                        rows[ny][nx]
-                        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
-                        if 0 <= ny < height and 0 <= nx < width and rows[ny][nx] not in ".P"
-                    ]
-                    under = max(set(near), key=near.count) if near else "W"
-                    token = PIXEL.get(under) or PIXEL["W"]
-                else:
-                    token = PIXEL[ch]
-                parts.extend(["{}" if token is None else token] * zoom)
-            spec = "{" + " ".join(parts) + "}"
-            for sy in range(zoom):
-                img.put(spec, to=(0, y * zoom + sy))
-        pupil = PIXEL["P"]
-        block = "{" + " ".join([pupil] * zoom) + "}"
-        for x, y in pupils:
-            px, py = self._pupil_shift(rows, x, y, ox, oy, zoom)
-            for sy in range(zoom):
-                img.put(block, to=(x * zoom + px, y * zoom + py + sy))
-        self._pix[key] = img
-        return img
-
-    def _draw_pixel(self, cx: float, cy: float, gaze: tuple[float, float] = (0.0, 0.0)) -> None:
-        rows = self._look_rows()
-        zoom = self._pixel_zoom()
-        if self.blink:
-            ox = oy = 0
+                c.create_oval(ex - u(5), ey - u(5.4), ex + u(5), ey + u(5.4), fill="#1c1c1c", outline="", tags="d")
+                c.create_oval(ex - u(3.1) + dx, ey - u(3.3) + dy, ex + u(1.6) + dx, ey + u(1.4) + dy, fill="#f7f7f7", outline="", tags="d")
+        if dizzy:
+            c.create_oval(x - u(4), y + u(7), x + u(4), y + u(14), outline="#1c1c1c", width=2, tags="d")
         else:
-            ox = int(round(clamp(gaze[0], -1.0, 1.0) * zoom))
-            oy = int(round(clamp(gaze[1], -1.0, 1.0) * zoom))
-        img = self._sprite_image(rows, ox, oy)
-        self.canvas.create_image(int(round(cx)), int(round(cy)), image=img, anchor="center", tags="d")
+            c.create_arc(x - u(7), y + u(4), x + u(7), y + u(16), start=200, extent=140, style="arc", outline="#1c1c1c", width=2, tags="d")
 
-    def _smooth_gaze(self, dx: float, dy: float) -> tuple[float, float]:
-        gx, gy = getattr(self, "_gaze", (0.0, 0.0))
-        gx += (clamp(dx, -1.0, 1.0) - gx) * 0.1
-        gy += (clamp(dy, -1.0, 1.0) - gy) * 0.1
-        self._gaze = (gx, gy)
-        return gx, gy
+    def _nail_sleepy(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        ink = "#1c1c1c"
+        c.create_polygon(
+            x + u(6) * sx, y - u(12) * sy,
+            x - u(4) * sx, y - u(30) * sy,
+            x - u(18) * sx, y - u(8) * sy,
+            fill="#6d5bd0", outline="#2c2458", width=2, tags="d",
+        )
+        c.create_oval(x - u(24) * sx, y - u(16) * sy, x - u(12) * sx, y - u(4) * sy, fill="#f4f1ff", outline="#2c2458", width=2, tags="d")
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            ey = y - u(1) * sy
+            if self.blink or not dizzy:
+                if self.blink:
+                    self._closed_eye(ex, ey, u(6), ink)
+                else:
+                    c.create_arc(ex - u(6), ey - u(3), ex + u(6), ey + u(5), start=15, extent=150, style="arc", outline=ink, width=2, tags="d")
+            else:
+                dx, dy = self._nail_gaze(x, y, True)
+                c.create_oval(ex - u(5), ey - u(5), ex + u(5), ey + u(5), fill="#1c1c1c", outline="", tags="d")
+                c.create_oval(ex - u(2) + dx, ey - u(2) + dy, ex + u(1.2) + dx, ey + u(1.2) + dy, fill="#f7f7f7", outline="", tags="d")
+        if dizzy:
+            c.create_oval(x - u(3.5), y + u(6), x + u(3.5), y + u(13), outline=ink, width=2, tags="d")
+        else:
+            c.create_arc(x - u(6), y + u(5), x + u(6), y + u(14), start=200, extent=140, style="arc", outline=ink, width=2, tags="d")
+
+    def _nail_grumpy(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        ink = "#1c1c1c"
+        dx, dy = self._nail_gaze(x, y, dizzy)
+        c.create_line(x - u(14) * sx, y - u(12) * sy, x - u(2) * sx, y - u(7) * sy, fill=ink, width=2, capstyle="round", tags="d")
+        c.create_line(x + u(14) * sx, y - u(12) * sy, x + u(2) * sx, y - u(7) * sy, fill=ink, width=2, capstyle="round", tags="d")
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            ey = y - u(1) * sy
+            if self.blink:
+                self._closed_eye(ex, ey, u(5), ink)
+            else:
+                c.create_oval(ex - u(5), ey - u(3.2), ex + u(5), ey + u(3.2), fill="#1c1c1c", outline="", tags="d")
+                c.create_oval(ex - u(2.2) + dx * 0.6, ey - u(1.6) + dy * 0.5, ex + u(1.2) + dx * 0.6, ey + u(1.2) + dy * 0.5, fill="#f7f7f7", outline="", tags="d")
+        c.create_arc(x - u(7), y + u(8), x + u(7), y + u(18), start=20, extent=140, style="arc", outline=ink, width=2, tags="d")
+
+    def _nail_cool(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        ink = "#1c1c1c"
+        eye_y = y - u(1) * sy
+        c.create_line(x - u(16) * sx, eye_y, x + u(16) * sx, eye_y, fill="#3a2918", width=2, tags="d")
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            c.create_oval(ex - u(7), eye_y - u(5), ex + u(7), eye_y + u(5), fill="#1a120e", outline="#8a6418", width=2, tags="d")
+            if not self.blink:
+                c.create_line(ex - u(3), eye_y - u(2), ex - u(0.4), eye_y + u(1), fill="#ffe7a3", width=2, capstyle="round", tags="d")
+        if dizzy:
+            c.create_oval(x - u(3.5), y + u(6), x + u(3.5), y + u(13), outline=ink, width=2, tags="d")
+        else:
+            c.create_arc(x - u(1), y + u(6), x + u(8), y + u(15), start=210, extent=110, style="arc", outline=ink, width=2, tags="d")
+
+    def _nail_cat(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        ink = "#5c3b16"
+        for side in (-1, 1):
+            ex = x + side * u(12) * sx
+            c.create_polygon(
+                ex - u(6), y - u(14) * sy,
+                ex, y - u(30) * sy,
+                ex + u(6), y - u(14) * sy,
+                fill="#fff1d6", outline=ink, width=2, tags="d",
+            )
+            c.create_polygon(
+                ex - u(2.4), y - u(16) * sy,
+                ex, y - u(24) * sy,
+                ex + u(2.4), y - u(16) * sy,
+                fill="#e7a0b0", outline="", tags="d",
+            )
+        dx, _dy = self._nail_gaze(x, y, dizzy)
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            ey = y - u(1) * sy
+            if self.blink:
+                self._closed_eye(ex, ey, u(5), ink)
+            else:
+                c.create_oval(ex - u(5), ey - u(4.5), ex + u(5), ey + u(4), fill="#fffef8", outline=ink, width=2, tags="d")
+                px = clamp(dx * 0.45, -u(1.6), u(1.6))
+                c.create_line(ex + px, ey - u(2.6), ex + px, ey + u(2.6), fill=ink, width=2, capstyle="round", tags="d")
+        c.create_polygon(x, y + u(5), x - u(3), y + u(9), x + u(3), y + u(9), fill="#e15b73", outline="", tags="d")
+        for side in (-1, 1):
+            c.create_line(x + side * u(3), y + u(8), x + side * u(16) * sx, y + u(6), fill=ink, width=2, capstyle="round", tags="d")
+            c.create_line(x + side * u(3), y + u(10), x + side * u(15) * sx, y + u(12), fill=ink, width=2, capstyle="round", tags="d")
+
+    def _nail_robot(self, x: float, y: float, sx: float, sy: float, dizzy: bool) -> None:
+        c = self.canvas
+        ink = "#1c2830"
+        c.create_line(x, y - u(16) * sy, x, y - u(30) * sy, fill=ink, width=2, capstyle="round", tags="d")
+        tip = y - u(33) * sy
+        c.create_oval(x - u(3.5), tip - u(3.5), x + u(3.5), tip + u(3.5), fill="#e24b4b" if not dizzy else "#7ec8e3", outline=ink, width=2, tags="d")
+        dx, dy = self._nail_gaze(x, y, dizzy)
+        for side in (-1, 1):
+            ex = x + side * u(8) * sx
+            ey = y - u(2) * sy
+            if self.blink:
+                c.create_rectangle(ex - u(5), ey - u(1.4), ex + u(5), ey + u(1.4), fill="#7ec8e3", outline=ink, width=1, tags="d")
+            else:
+                c.create_rectangle(ex - u(5), ey - u(4), ex + u(5), ey + u(4), fill="#7ec8e3", outline=ink, width=2, tags="d")
+                c.create_rectangle(ex - u(2) + dx * 0.35, ey - u(2) + dy * 0.25, ex + u(1) + dx * 0.35, ey + u(1) + dy * 0.25, fill="#f7fbff", outline="", tags="d")
+        for i in range(3):
+            mx = x - u(6) + i * u(5)
+            c.create_rectangle(mx, y + u(7), mx + u(3), y + u(11), fill=ink, outline="", tags="d")
+
+    def _closed_eye(self, cx: float, cy: float, rx: float, color: str) -> None:
+        self.canvas.create_line(cx - rx, cy, cx + rx, cy, fill=color, width=2, capstyle="round", tags="d")
 
     def _draw_nail(self, dizzy: bool) -> None:
         c = self.canvas
         x, y = self.nail.x, self.nail.y
-        c.create_oval(x - u(18), y + u(20), x + u(18), y + u(30), fill="#3a3a3a", outline="", tags="d")
-        cx, cy, _half_w, _half_h = self._nail_focus()
-        if dizzy:
-            ang = self.t * 0.45
-            dx, dy = math.cos(ang), math.sin(ang)
-        else:
-            mx, my = self.to_canvas(*self.last_mouse)
-            dx = (mx - cx) / u(48)
-            dy = (my - cy) / u(48)
-        self._draw_pixel(cx, cy, self._smooth_gaze(dx, dy))
+        sx = clamp(self.nail.squish, 0.82, 1.28)
+        sy = clamp(2 - sx, 0.82, 1.28)
+        hr = u(26)
+        c.create_oval(x - hr * 0.8, y + u(18), x + hr * 0.8, y + u(30), fill="#3a3a3a", outline="", tags="d")
         rx, ry = self.nail.ring()
         pulse = 1.0 + (0.07 * math.sin(self.t * 0.18) if self.mode != "pull" else 0.0)
         rr = u(11) * pulse
         c.create_oval(rx - rr, ry - rr, rx + rr, ry + rr, fill="#f0c75a", outline="#8a6418", width=3, tags="d")
         hole = u(4.5)
         c.create_oval(rx - hole, ry - hole, rx + hole, ry + hole, fill=KEY, outline="#8a6418", width=2, tags="d")
-        kx, ky = self._close_point()
+        if self.look == "cat":
+            face_fill, face_edge = "#fff1d6", "#8a6230"
+        elif self.look == "robot":
+            face_fill, face_edge = "#d5dee6", "#3e4a55"
+        else:
+            face_fill, face_edge = "#eef2f6", "#66707a"
+        c.create_oval(x - hr * sx, y - hr * sy, x + hr * sx, y + hr * sy, fill="#c5ced6", outline="", tags="d")
+        c.create_oval(x - hr * sx * 0.86, y - hr * sy * 0.86, x + hr * sx * 0.86, y + hr * sy * 0.86, fill=face_fill, outline=face_edge, width=2, tags="d")
+        c.create_oval(x - hr * sx * 0.55, y - hr * sy * 0.62, x - hr * sx * 0.18, y - hr * sy * 0.28, fill="#ffffff", outline="", tags="d")
+        self._draw_nail_face(x, y, sx, sy, dizzy)
+        kx, ky = x + u(20), y - u(22)
         c.create_oval(kx - u(8), ky - u(8), kx + u(8), ky + u(8), fill="#e24b4b", outline="#6d1d1d", width=2, tags="d")
         c.create_line(kx - u(3.5), ky - u(3.5), kx + u(3.5), ky + u(3.5), fill="white", width=2, tags="d")
         c.create_line(kx + u(3.5), ky - u(3.5), kx - u(3.5), ky + u(3.5), fill="white", width=2, tags="d")
@@ -2399,8 +2066,8 @@ class App:
             self.nail.x, self.nail.y = x, y
         self.topmost = bool(data.get("topmost", True))
         self.hint_done = bool(data.get("hint_done", False))
-        look = data.get("look") or "cat"
-        self.look = look if look in LOOK_IDS else "cat"
+        look = data.get("look") or "goofy"
+        self.look = look if look in LOOK_IDS else "goofy"
         ax, ay = self.nail.anchor()
         for i, item in enumerate(data.get("ropes") or []):
             try:
@@ -2455,7 +2122,7 @@ class App:
             "y": self.nail.y,
             "topmost": self.topmost,
             "hint_done": self.hint_done,
-            "look": self.look if self.look in LOOK_IDS else "cat",
+            "look": self.look if self.look in LOOK_IDS else "goofy",
             "ropes": ropes,
         }
         tmp = STATE_PATH + ".tmp"
@@ -2481,15 +2148,7 @@ def run_self_test() -> None:
     SCALE = 1.0
     assert ctypes.sizeof(LVITEMW) == 88, ctypes.sizeof(LVITEMW)
     assert LVITEMW.pszText.offset == 24
-    for name, _label in LOOKS:
-        rows = SPRITES[name]
-        width = len(rows[0])
-        assert width >= 8, name
-        for row in rows:
-            assert len(row) == width, (name, len(row), row)
-            assert set(row) <= set(PIXEL), (name, set(row) - set(PIXEL))
-        assert len(blink_pixels(rows, *BLINK_STYLE[name])) == len(rows)
-        assert len(shift_pupils(rows, 1, 0)) == len(rows)
+    assert set(LOOK_IDS) == {"goofy", "sleepy", "grumpy", "cool", "cat", "robot"}
 
     ax, ay = 400.0, 180.0
     rope = Rope(220.0, ax, ay, angle=0.15, push=6.0, path="C:\\Windows\\notepad.exe", display="notepad")
